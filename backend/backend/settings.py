@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     # Local Application 
     'attendance',
 
-    # Rest Framework
-    "restframework"
+    # Third-party Applications
+    "rest_framework",
+    "rest_framework_simplejwt"
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,17 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = 'attendance.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'email',
+    'TOKEN_OBTAIN_SERIALIZER': 'users.serializers.CustomTokenObtainPairSerializer',
+}
+
