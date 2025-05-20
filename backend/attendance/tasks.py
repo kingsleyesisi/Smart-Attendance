@@ -1,5 +1,6 @@
 from celery import shared_task
 from django.core.mail import send_mail
+from .models import User
 
 @shared_task
 def send_approval_request(user_id):
@@ -8,8 +9,8 @@ def send_approval_request(user_id):
     send_mail(
         'Coordinator Approval Needed',
         f'New coordinator registration from {user.email}',
-        'noreply@school.com',
-        ['admin@school.com'],
+        'kingsleyesisi1@gmail.com',
+        ['kingsleyesisi1@gmail.com'],
         fail_silently=False,
     )
 
@@ -19,7 +20,7 @@ def send_approval_notification(user_email):
     send_mail(
         'Registration Approved',
         'Your coordinator account has been approved',
-        'noreply@school.com',
+        'kingsleyesisi1@gmail.com',
         [user_email],
         fail_silently=False,
     )
