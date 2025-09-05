@@ -1,27 +1,34 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from .models import CustomUser
+from rest_framework import serializers
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
-class RegisterSerializer(serializers.ModelSerializer):
+class SignupSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     confirm_password = serializers.CharField(write_only=True)
 
     class Meta:
-        model = CustomUser
+        model = User
         fields = [
             "first_name",
             "last_name",
             "middle_name",
             "email",
+            "mat_no",
+            "department",
+            "faculty",
+            "level",
+            "phone_number",
             "password",
             "confirm_password",
-            "department",
-            "level",
-            "faculty",
-            "phone_number",
-            "mat_no",
         ]
+        extra_kwargs = {
+            "password": {"write_only": True},
+            "confirm_password": {"write_only": True},
+        }
 
     def validate(self, attrs):
         if attrs["password"] != attrs["confirm_password"]:
@@ -30,18 +37,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop("confirm_password")
-        user = CustomUser.objects.create_user(
-            email=validated_data["email"],
-            password=validated_data["password"],
-            first_name=validated_data["first_name"],
-            last_name=validated_data["last_name"],
-            middle_name=validated_data.get("middle_name"),
-            department=validated_data["department"],
-            level=validated_data["level"],
-            faculty=validated_data["faculty"],
-            phone_number=validated_data["phone_number"],
-            mat_no=validated_data["mat_no"],
-        )
+        password = validated_data.pop("password")
+        user = User.objects.create_user(**validated_data)
+        user.set_password(password)
+        user.save()
         return user
 
 
@@ -53,7 +52,9 @@ class LoginSerializer(serializers.Serializer):
         email = attrs.get("email")
         password = attrs.get("password")
 
-        user = authenticate(request=self.context.get("request"), email=email, password=password)
+        user = authenticate(
+            request=self.context.get("request"), email=email, password=password
+        )
         if not user:
             raise serializers.ValidationError("Invalid email or password.")
         attrs["user"] = user
