@@ -1,18 +1,17 @@
 from rest_framework import generics, status
-from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework.authtoken.models import Token
-from django.contrib.auth import login
-from .serializers import SignupSerializer, LoginSerializer
-from django.contrib.auth import logout
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from .serializers import SignupSerializer, LoginSerializer
+from rest_framework.permissions import IsAuthenticated
+
 
 class SignupView(generics.CreateAPIView):
     serializer_class = SignupSerializer
     permission_classes = [AllowAny]
 
+    # register and save user
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -24,7 +23,6 @@ class SignupView(generics.CreateAPIView):
             "refresh": str(refresh),
             "access": str(refresh.access_token),
         }
-
         headers = self.get_success_headers(serializer.data)
         return Response(
             {**serializer.data, **token_data},
@@ -48,9 +46,30 @@ class LoginView(generics.GenericAPIView):
 
 
 # logout viewpoint
-@csrf_exempt
-def logout_view(request):
-    if request.method == "POST":
-        logout(request)
-        return JsonResponse({"message": "Logout successful"}, status=200)
-    return JsonResponse({"error": "Only POST allowed"}, status=405)
+class LogoutView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response({"detail": "Successfully logged out."})
+        except Exception:
+            return Response({"detail": "Invalid token."}, status=400)
+
+
+# test class
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response(
+            {
+                "id": user.id,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "email": user.email,
+            }
+        )
