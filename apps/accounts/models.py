@@ -1,5 +1,10 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    PermissionsMixin,
+    BaseUserManager,
+)
 from django.db import models
+
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -29,10 +34,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=15, unique=True)
     mat_no = models.CharField(max_length=20, unique=True)
 
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(
+        default=True
+    )  # control student access (set to false and the student can't login)
+    is_staff = models.BooleanField(
+        default=False
+    )  # staff access having the ability to log into /admin (lecturer access)
 
-    USERNAME_FIELD = "email"   # 👈 This makes email the login field
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name", "mat_no"]
 
     objects = CustomUserManager()
