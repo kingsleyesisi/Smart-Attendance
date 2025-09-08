@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import SignupSerializer, LoginSerializer
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import render
 
 
 class SignupView(generics.CreateAPIView):
@@ -71,5 +72,14 @@ class ProfileView(APIView):
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "email": user.email,
+                "mat_no": user.mat_no,
+                "department": user.department,
+                "faculty": user.faculty,
+                "level": user.level,
+                "phone_number": user.phone_number,
             }
         )
+
+
+def index(request):
+    return render(request, "index.html")
