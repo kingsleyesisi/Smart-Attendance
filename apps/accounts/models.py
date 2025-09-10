@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
 )
 from django.db import models
+from django.conf import settings
 
 
 class CustomUserManager(BaseUserManager):
@@ -56,3 +57,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+# Class session Test
+class ClassSession(models.Model):
+    title = models.CharField(max_length=255)
+    start_time = models.DateTimeField()
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.title} - {self.start_time}"
