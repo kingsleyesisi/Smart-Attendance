@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import SignupSerializer, LoginSerializer
 from rest_framework.permissions import IsAuthenticated
+from .permissions import IsCoordinator
 
 
 class SignupView(generics.CreateAPIView):
@@ -60,9 +61,8 @@ class LogoutView(APIView):
 
 
 # test class
-class ProfileView(APIView):
+class ProfileDashboard(APIView):
     permission_classes = [IsAuthenticated]
-
     def get(self, request):
         user = request.user
         return Response(
@@ -73,3 +73,10 @@ class ProfileView(APIView):
                 "email": user.email,
             }
         )
+
+# Coordinator
+class CoordinatorDashboard(APIView):
+    permission_classes = [IsAuthenticated, IsCoordinator]
+
+    def get(self, request):
+        return Response({"message": "You are a  Coordinator"})

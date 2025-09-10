@@ -11,6 +11,7 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError("The Email field must be set")
         email = self.normalize_email(email)
+        extra_fields.setdefault("role", "student")  # Everyone set to student 
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -19,11 +20,16 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("role", "admin")
 
         return self.create_user(email, password, **extra_fields)
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    ROLE_CHOICES = (
+        ("student", "Student"),
+        ("coordinator", "Coordinator"),
+    )
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50, blank=True, null=True)
@@ -33,6 +39,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     faculty = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15, unique=True)
     mat_no = models.CharField(max_length=20, unique=True)
+    
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="student")  # Student role field
 
     is_active = models.BooleanField(
         default=True
