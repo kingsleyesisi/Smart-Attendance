@@ -150,14 +150,9 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"      
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "princewill835@gmail.com"
-EMAIL_HOST_PASSWORD = "vjwq xyhi cqyc pqyc"
+EMAIL_HOST_USER = "princendubuisidev@gmail.com"
+EMAIL_HOST_PASSWORD = "vvto dyhk vjvo qwbm"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-# checks every minute if there's a class 
-# CELERY_BEAT_SCHEDULE = {
-#     "send-class-reminders-every-1-min": {
-#         "task": "your_app.tasks.send_class_reminders",
-#         "schedule": 60.0,  # run every minute
-#     },
-# }
+# for testing
+CELERY_TASK_ALWAYS_EAGER = True

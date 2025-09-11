@@ -11,7 +11,7 @@ urlpatterns = [
     path("login/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("logout/", LogoutView.as_view(), name="logout"),
-    path("profile/", ProfileDashboard.as_view(), name="test"), #test view for authentication (To be removed)
+    path("profile/", ProfileDashboard.as_view(), name="test"), #Page redirected to after signup
     path("coordinator/", CoordinatorDashboard.as_view(), name="coordinator-check"),
     path("trigger-reminder/", TriggerReminderView.as_view(), name="trigger-reminder"),
 ]

@@ -6,8 +6,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import SignupSerializer, LoginSerializer
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsCoordinator
-from rest_framework.permissions import IsAdminUser  
-from backend.tasks import send_class_reminders  
+from rest_framework.permissions import IsAdminUser
+from backend.tasks import send_class_reminders
 
 
 class SignupView(generics.CreateAPIView):
@@ -65,16 +65,22 @@ class LogoutView(APIView):
 # test class
 class ProfileDashboard(APIView):
     permission_classes = [IsAuthenticated]
+
     def get(self, request):
         user = request.user
         return Response(
             {
                 "id": user.id,
                 "first_name": user.first_name,
+                "middle_name": user.middle_name,
                 "last_name": user.last_name,
                 "email": user.email,
+                "mat_no": user.mat_no,
+                "level": user.level,
+                "department": user.department,
             }
         )
+
 
 # Coordinator
 class CoordinatorDashboard(APIView):
@@ -83,9 +89,13 @@ class CoordinatorDashboard(APIView):
     def get(self, request):
         return Response({"message": "You are a  Coordinator"})
 
+
 class TriggerReminderView(APIView):
-    permission_classes = [IsAdminUser]  
+    permission_classes = [IsAdminUser]
 
     def post(self, request):
-        send_class_reminders.delay()  # run async with Celery
+        # Run task synchronously (for testing)
+        send_class_reminders()
+        # live use
+        send_class_reminders.delay()
         return Response({"message": "Reminder task has been triggered."})

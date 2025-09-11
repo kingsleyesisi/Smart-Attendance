@@ -57,11 +57,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
 # Class session Test
 class ClassSession(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=200)
     start_time = models.DateTimeField()
-    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    students = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        limit_choices_to={"role": "student"},
+        related_name="class_sessions"
+    )
 
     def __str__(self):
-        return f"{self.title} - {self.start_time}"
+        return self.title
