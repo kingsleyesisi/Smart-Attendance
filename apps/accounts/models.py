@@ -67,6 +67,7 @@ class ClassSession(models.Model):
         limit_choices_to={"role": "student"},
         related_name="class_sessions"
     )
+    reminder_sent = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
