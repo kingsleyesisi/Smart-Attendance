@@ -5,7 +5,12 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import SignupSerializer, LoginSerializer
 from rest_framework.permissions import IsAuthenticated
-from django.shortcuts import render
+from .permissions import IsCoordinator
+from rest_framework.permissions import IsAdminUser
+from backend.tasks import send_class_reminders
+from apps.accounts.models import ClassSession, CustomUser
+from backend.tasks import send_class_reminders
+from django.utils.timezone import now, timedelta
 
 
 class SignupView(generics.CreateAPIView):
@@ -61,7 +66,7 @@ class LogoutView(APIView):
 
 
 # test class
-class ProfileView(APIView):
+class ProfileDashboard(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -70,16 +75,54 @@ class ProfileView(APIView):
             {
                 "id": user.id,
                 "first_name": user.first_name,
+                "middle_name": user.middle_name,
                 "last_name": user.last_name,
                 "email": user.email,
                 "mat_no": user.mat_no,
-                "department": user.department,
-                "faculty": user.faculty,
                 "level": user.level,
-                "phone_number": user.phone_number,
+                "department": user.department,
             }
         )
 
 
-def index(request):
-    return render(request, "index.html")
+# Coordinator
+class CoordinatorDashboard(APIView):
+    permission_classes = [IsAuthenticated, IsCoordinator]
+
+    def get(self, request):
+        return Response({"message": "You are a  Coordinator"})
+
+
+class TriggerReminderView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def post(self, request):
+        # Create a test session starting 5 minutes from now
+        session = ClassSession.objects.create(
+            title="API Trigger Test Class", start_time=now() + timedelta(minutes=5)
+        )
+
+        # Add all students in DB to the session
+        students = CustomUser.objects.filter(role="student")
+        if not students.exists():
+            return Response(
+                {"message": "No students found in the database."}, status=400
+            )
+
+        session.students.add(*students)
+        # Trigger the reminder task synchronously (for testing)
+        send_class_reminders()  # runs immediately
+
+        # trigger async for live with celery use
+        send_class_reminders.delay()
+        return Response(
+            {
+                "message": f"Test session created and reminder sent to {students.count()} students."
+            }
+        )
+
+
+# when testing with celery create a class session in django shell
+# use this to reset all class session
+# from apps.accounts.models import ClassSession
+# ClassSession.objects.filter(reminder_sent=True).update(reminder_sent=False)
