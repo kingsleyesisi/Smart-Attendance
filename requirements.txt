@@ -2,3 +2,6 @@ django
 djangorestframework
 djangorestframework-simplejwt
 docmint
+uvicorn
+gunicorn
+
