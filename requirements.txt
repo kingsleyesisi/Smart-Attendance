@@ -4,4 +4,6 @@ djangorestframework-simplejwt
 docmint
 uvicorn
 gunicorn
-
+celery
+face_recognition
+numpy
