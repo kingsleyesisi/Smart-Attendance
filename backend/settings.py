@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-from datetime import timedelta
+from celery.schedules import crontab #live when running 10 mins
+from dotenv import load_dotenv 
+import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -137,20 +140,34 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Email Reminder
 
-# Rest Framework 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
-    # protects route and require user to be login
-    "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",  
-    ),
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend" #set to console to avoid connectivity issue, it works locally, prints in terminal | use smtp when you want to test it live
+EMAIL_HOST = config("EMAIL_HOST", default="smtp.gmail.com")
+EMAIL_PORT = config("EMAIL_PORT", default=465, cast=int)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=False, cast=bool)
+EMAIL_USE_SSL = config("EMAIL_USE_SSL", default=True, cast=bool)
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default=EMAIL_HOST_USER)
+
+
+
+# live(check every 1 min)
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+CELERY_BEAT_SCHEDULE = {
+    "send-class-reminders-every-10-min": {
+        "task": "backend.tasks.send_class_reminders",
+        "schedule": 60.0,  # every 1 minute 
+    },
 }
-# Simple JWT settings
-SIMPLE_JWT = {
-        "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-        "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-        "ROTATE_REFRESH_TOKENS": False,
-}
+
+
+# for testing (instant remainder with postman set to True)(Else False: Celery)
+CELERY_TASK_ALWAYS_EAGER = True
+
+# shell commands to run celery
+# also make sure redis-server is running
+# celery -A backend beat -l info (for running bet on windows)
+# celery -A backend worker -l info -P solo(for running worker)
