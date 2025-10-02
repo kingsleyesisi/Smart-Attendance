@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from .models import CustomUser
+from .models import CustomUser, Course
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
@@ -59,3 +59,12 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Invalid email or password.")
         attrs["user"] = user
         return attrs
+    
+class CourseSerializer(serializers.ModelSerializer):
+    lecturer = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = Course
+        fields = ["id", "code", "title", "credits", "lecturer"]
+
+
