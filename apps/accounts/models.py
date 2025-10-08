@@ -12,7 +12,7 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError("The Email field must be set")
         email = self.normalize_email(email)
-        extra_fields.setdefault("role", "student")  # Everyone set to student 
+        extra_fields.setdefault("role", "student")  # Everyone set to student
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -40,8 +40,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     faculty = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15, unique=True)
     mat_no = models.CharField(max_length=20, unique=True)
-    
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="student")  # Student role field
+
+    role = models.CharField(
+        max_length=20, choices=ROLE_CHOICES, default="student"
+    )  # Student role field
 
     is_active = models.BooleanField(
         default=True
@@ -57,7 +59,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-    
+
+user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
 # Class session Test
 class ClassSession(models.Model):
     title = models.CharField(max_length=200)
@@ -65,9 +69,45 @@ class ClassSession(models.Model):
     students = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         limit_choices_to={"role": "student"},
-        related_name="class_sessions"
+        related_name="class_sessions",
     )
     reminder_sent = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
+
+
+class Course(models.Model):
+    code = models.CharField(max_length=10, unique=True)
+    title = models.CharField(max_length=200)
+    credits = models.IntegerField(default=3)
+    level = models.CharField(max_length=50,  default="100")
+    lecturer = models.ForeignKey(
+        CustomUser,
+        on_delete=models.SET_NULL,
+        null=True,
+        limit_choices_to={"is_superuser": True},
+        related_name="courses",
+    )
+
+    def __str__(self):
+        return f"{self.code} - {self.title}"
+
+
+class RegisterCourse(models.Model):
+    student = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name="register_courses",
+        limit_choices_to={"role": "student"}, 
+    )
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, related_name="register_courses"
+    )
+    date_enrolled = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("student", "course")
+
+    def __str__(self):
+        return f"{self.student.mat_no} registered course {self.course.code}"

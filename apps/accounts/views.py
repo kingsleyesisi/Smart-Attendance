@@ -11,6 +11,8 @@ from backend.tasks import send_class_reminders
 from apps.accounts.models import ClassSession, CustomUser
 from backend.tasks import send_class_reminders
 from django.utils.timezone import now, timedelta
+from .models import Course, RegisterCourse
+from .serializers import CourseSerializer
 
 
 class SignupView(generics.CreateAPIView):
@@ -120,6 +122,56 @@ class TriggerReminderView(APIView):
                 "message": f"Test session created and reminder sent to {students.count()} students."
             }
         )
+
+
+class CourseListView(generics.ListAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    permission_classes = [IsAuthenticated]
+
+
+# Student enrolls in a course
+class RegisterAllCoursesView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        student = request.user
+        level = student.level
+
+        # Fetch all courses for that level
+        courses = Course.objects.filter(level=level)
+
+        enrolled = []
+        already = []
+
+        for course in courses:
+            obj, created = RegisterCourse.objects.get_or_create(
+                student=student, course=course
+            )
+            if created:
+                enrolled.append(
+                    {"code": course.code, "title": course.title, "level": course.level}
+                )
+            else:
+                already.append(course.code)
+
+        return Response(
+            {
+                "message": f"Processed courses for {level} level student",
+                "newly_enrolled": enrolled,
+                "already_enrolled": already,
+            },
+            status=status.HTTP_201_CREATED,
+        )
+
+
+# List student’s enrolled courses
+class MyCoursesView(generics.ListAPIView):
+    serializer_class = CourseSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Course.objects.filter(register_courses__student=self.request.user)
 
 
 # when testing with celery create a class session in django shell
