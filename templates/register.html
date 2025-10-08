@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Register</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="bg-[#9BB9D1]">
+
+  <!-- Nav -->
+  <header class="fixed w-full top-0 left-0 z-50 bg-[#415E72]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <a href="#" class="ml-2 flex items-center">
+          <img src="imgs/Logo1.png" alt="logo" class="h-10"/>
+        </a>
+
+        <div class="hidden md:flex space-x-6 text-black">
+          <a href="#home" class="hover:text-blue-300">Home</a>
+          <a href="#about" class="hover:text-blue-300">About</a>
+          <a href="#services" class="hover:text-blue-300">Services</a>
+        </div>
+
+        <button id="menu-btn" class="md:hidden p-2 text-black">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="menu" class="hidden md:hidden bg-indigo-100 shadow-md">
+      <a href="#home" class="block px-4 py-2 text-gray-700 hover:bg-blue-200">Home</a>
+      <a href="#about" class="block px-4 py-2 text-gray-700 hover:bg-blue-200">About</a>
+      <a href="#services" class="block px-4 py-2 text-gray-700 hover:bg-blue-200">Services</a>
+    </div>
+  </header>
+
+  <!-- Main container -->
+  <main class="pt-20 flex items-center justify-center min-h-screen md:h-[850px] lg:h-[900px] bg-[#9BB9D1]">
+    <div class="w-full max-w-[720px] p-6 rounded-2xl shadow-xl bg-[#94B5CF]">
+      <div class="flex items-center justify-between mb-4">
+        <a href="login.html" class="text-gray-800"><i class="fa-solid fa-arrow-left"></i></a>
+        <h2 class="text-2xl font-semibold">Registration</h2>
+        <div class="w-6"></div>
+      </div>
+
+      <form id="registrationForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- First column -->
+        <div>
+          <label for="firstname" class="block text-sm">First name</label>
+          <input id="firstname" type="text"
+            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+
+          <label for="middlename" class="block mt-3 text-sm">Middle name</label>
+          <input id="middlename" type="text"
+            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+
+          <label for="lastname" class="block mt-3 text-sm">Last name</label>
+          <input id="lastname" type="text"
+            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+
+          <label for="department" class="block mt-3 text-sm">Department</label>
+          <input id="department" type="text"
+            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+        </div>
+
+        <!-- Second column -->
+        <div>
+          <label for="password" class="block text-sm">Password</label>
+          <input id="password" type="password"
+            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+
+          <label for="confirm_password" class="block mt-3 text-sm">Confirm Password</label>
+          <input id="confirm_password" type="password"
+            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+
+          <label for="phone_number" class="block mt-3 text-sm">Phone Number</label>
+          <input id="phone_number" type="tel"
+            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+
+          <label for="mat_number" class="block mt-3 text-sm">Mat Number</label>
+          <input id="mat_number" type="text"
+            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+        </div>
+
+        <!-- Full width Email -->
+        <div class="md:col-span-2">
+          <label for="email" class="block text-sm">Email</label>
+          <input id="email" type="email"
+            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+        </div>
+
+        <!-- Level -->
+        <div class="md:col-span-2">
+          <h3 class="text-center text-xl mb-2">Level</h3>
+          <div class="flex flex-wrap justify-center gap-6">
+            <label class="flex items-center space-x-2">
+              <input type="radio" name="level" value="100" />
+              <span>100</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="radio" name="level" value="200" />
+              <span>200</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="radio" name="level" value="300" />
+              <span>300</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="radio" name="level" value="400" />
+              <span>400</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="radio" name="level" value="500" />
+              <span>500</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="md:col-span-2">
+          <h3 class="text-center text-xl mb-2">Register as a</h3>
+          <div class="flex justify-center">
+            <select id="status" class="w-1/2 p-2 border border-gray-500 rounded-lg bg-transparent">
+              <option value="">-- Select --</option>
+              <option value="student">Student</option>
+              <option value="coordinator">Coordinator</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="md:col-span-2 flex flex-col items-center mt-3 space-y-4 lg:space-y-6">
+          <!-- Terms -->
+          <div class="flex items-center space-x-2 text-sm lg:text-base">
+            <input id="terms" type="checkbox" class="w-4 h-4" />
+            <label for="terms">I agree to terms and condition</label>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit"
+            class="border-2 border-[#415E72] bg-[#415E72] text-white py-2 px-6 lg:py-3 lg:px-8 rounded-md hover:bg-transparent hover:text-[#415E72]">
+            Submit
+          </button>
+        </div>
+
+
+
+        <div class="">
+          <p class="text-center mt-3">Already have an account? 
+            <a href="login.html" class="text-indigo-700 font-semibold hover:underline">Login</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    // Toggle mobile menu
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+    if (btn && menu) {
+      btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+    }
+
+    // Form logic
+    const form = document.getElementById('registrationForm');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const firstname = document.getElementById('firstname').value.trim();
+      const middlename = document.getElementById('middlename').value.trim();
+      const lastname = document.getElementById('lastname').value.trim();
+      const department = document.getElementById('department').value.trim();
+      const password = document.getElementById('password').value;
+      const confirm_password = document.getElementById('confirm_password').value;
+      const phone_number = document.getElementById('phone_number').value.trim();
+      const mat_number = document.getElementById('mat_number').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const status = document.getElementById('status').value;
+      const level = document.querySelector('input[name="level"]:checked')?.value || '';
+      const termsChecked = document.getElementById('terms').checked;
+
+      if (!status) {
+        alert('Please select your status (Student or Coordinator).');
+        return;
+      }
+      if (status === 'student' && !level) {
+        alert('Please select your level.');
+        return;
+      }
+      if (!termsChecked) {
+        alert('Please agree to the terms and condition.');
+        return;
+      }
+      if (password !== confirm_password) {
+        alert('Passwords do not match.');
+        return;
+      }
+
+      const userData = { firstname, middlename, lastname, email, mat_number, department, phone_number, level, status, password };
+      localStorage.setItem('user_' + mat_number, JSON.stringify(userData));
+
+      alert(`Registered successfully as a ${status}!`);
+      if (status === 'student') {
+        window.location.href = 'student-dashboard.html';
+      } else {
+        window.location.href = 'coordinator-dashboard.html';
+      }
+    });
+  </script>
+</body>
+</html>

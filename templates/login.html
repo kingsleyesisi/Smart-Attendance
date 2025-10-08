@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body class="bg-[#9BB9D1] min-h-screen flex justify-center items-center">
+  <!-- Navigation Bar containing a HOME section, SERVICE section and an ABOUT section -->
+<header class="flex justify-between bg-[#415E72] p-2 items-center">
+    <nav class="bg-[#415E72] shadow-md fixed w-full top-0 left-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+      <div>
+      <a href="logo" class="ml-2 flex"><img src="imgs/Logo1.png" alt="" class="w-15"></a>
+    </div>
+        <!-- Desktop Links -->
+        <div class="hidden md:flex space-x-6">
+          <a href="#home" class="text-black hover:text-blue-300">Home</a>
+          <a href="#about" class="text-black hover:text-blue-300">About</a>
+          <a href="#services" class="text-black hover:text-blue-300">Services</a>
+        </div>
+
+        <!-- Hamburger Button -->
+        <button id="menu-btn" class="md:hidden focus:outline-none">
+          <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </ul>
+
+          <!-- Mobile Menu -->
+        <div id="menu" class="hidden md:hidden bg-indigo-100 shadow-md">
+          <a href="#home" class="block px-4 py-2 text-gray-700 hover:bg-blue-200">Home</a>
+          <a href="#about" class="block px-4 py-2 text-gray-700 hover:bg-blue-200">About</a>
+          <a href="#services" class="block px-4 py-2 text-gray-700 hover:bg-blue-200">Services</a>
+        </div>
+      </nav>
+  </header>
+  <!-- Login Card -->
+  <div class="w-96 p-6 rounded-lg shadow-lg bg-[#94B5CF] relative">
+    <button class="absolute top-4 left-4 text-gray-700 hover:bg-gray-200 p-2 rounded-full">
+      <a href="index.html"><i class="fa-solid fa-arrow-left"></i></a>
+    </button>
+    
+    <h2 class="text-3xl text-center mb-6 font-bold"><i class="fa-solid fa-user"></i> Login</h2>
+    
+    <form id="loginForm">
+      <label for="mat-no" class="block font-medium">Matric No</label>
+      <input type="text" id="email" class="w-full border rounded p-2 mb-4" required>
+      
+      <label for="password" class="block font-medium">Password</label>
+      <input type="password" id="password" class="w-full border rounded p-2 mb-4" required>
+      
+      <div class="flex justify-between items-center mb-4">
+        <label class="flex items-center gap-2">
+          <input type="checkbox"> Remember me
+        </label>
+        <a href="forgetpassword.html" class="text-indigo-700 font-semibold hover:underline">Forgot Password?</a>
+      </div>
+      
+      <button type="submit" class="w-full border-2 border-[#415E72] bg-[#415E72] text-white py-2 rounded-md hover:bg-transparent hover:text-[#415E72] transition">
+        Login
+      </button>
+    </form>
+    
+    <p class="text-center mt-4">Don't have an account? 
+      <a href="register.html" class="text-indigo-700 font-semibold hover:underline">Register</a>
+    </p>
+  </div>
+
+  <!-- Popup (Hidden by default) -->
+  <div id="popup" class="hidden fixed bottom-6 right-6 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-bounce">
+    ✅ You have successfully logged in!
+  </div>
+
+  <script>
+     const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+
+    // Toggle menu when hamburger is clicked
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+    
+    const loginForm = document.getElementById("loginForm");
+    const popup = document.getElementById("popup");
+
+    loginForm.addEventListener("submit", function(e) {
+      e.preventDefault(); // stop form from refreshing page
+      
+      // Show popup
+      popup.classList.remove("hidden");
+      
+      // After 2 seconds → redirect to dashboard
+      setTimeout(() => {
+        popup.classList.add("hidden");
+        window.location.href = "studentsdashboard.html"; // change this to your dashboard page
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
