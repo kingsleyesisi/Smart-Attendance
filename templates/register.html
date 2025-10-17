@@ -11,97 +11,66 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body class="bg-[#9BB9D1]">
-
-  <!-- Nav -->
-  <header class="fixed w-full top-0 left-0 z-50 bg-[#415E72]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
-        <a href="#" class="ml-2 flex items-center">
-          <img src="imgs/Logo1.png" alt="logo" class="h-10"/>
-        </a>
-
-        <div class="hidden md:flex space-x-6 text-black">
-          <a href="#home" class="hover:text-blue-300">Home</a>
-          <a href="#about" class="hover:text-blue-300">About</a>
-          <a href="#services" class="hover:text-blue-300">Services</a>
-        </div>
-
-        <button id="menu-btn" class="md:hidden p-2 text-black">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div id="menu" class="hidden md:hidden bg-indigo-100 shadow-md">
-      <a href="#home" class="block px-4 py-2 text-gray-700 hover:bg-blue-200">Home</a>
-      <a href="#about" class="block px-4 py-2 text-gray-700 hover:bg-blue-200">About</a>
-      <a href="#services" class="block px-4 py-2 text-gray-700 hover:bg-blue-200">Services</a>
-    </div>
-  </header>
+<body class="bg-[#81A7D6]">
 
   <!-- Main container -->
-  <main class="pt-20 flex items-center justify-center min-h-screen md:h-[850px] lg:h-[900px] bg-[#9BB9D1]">
-    <div class="w-full max-w-[720px] p-6 rounded-2xl shadow-xl bg-[#94B5CF]">
+  <main class="pt-20 flex items-center justify-center max-sm:leading-[3.0] min-h-screen md:h-[850px] lg:h-[900px] bg-[#9BB9D1]">
+    <div class="w-full max-w-[720px] p-6 rounded-2xl shadow-xl">
       <div class="flex items-center justify-between mb-4">
-        <a href="login.html" class="text-gray-800"><i class="fa-solid fa-arrow-left"></i></a>
-        <h2 class="text-2xl font-semibold">Registration</h2>
+        <a href="login.html" class="text-gray-800"><i class="fa-solid fa-arrow-left text-white"></i></a>
+        <h2 class="text-2xl font-semibold text-white">Registration</h2>
         <div class="w-6"></div>
       </div>
 
       <form id="registrationForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- First column -->
         <div>
-          <label for="firstname" class="block text-sm">First name</label>
+          <label for="firstname" class="block text-[500] text-white">First name</label>
           <input id="firstname" type="text"
-            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+            class="w-full border border-white rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
 
-          <label for="middlename" class="block mt-3 text-sm">Middle name</label>
+          <label for="middlename" class="block mt-3 text-[500] text-white">Middle name</label>
           <input id="middlename" type="text"
-            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+            class="w-full border border-white rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
 
-          <label for="lastname" class="block mt-3 text-sm">Last name</label>
+          <label for="lastname" class="block mt-3 text-[500] text-white">Last name</label>
           <input id="lastname" type="text"
-            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+            class="w-full border border-white rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
 
-          <label for="department" class="block mt-3 text-sm">Department</label>
+          <label for="department" class="block mt-3 text-[500] text-white">Department</label>
           <input id="department" type="text"
-            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+            class="w-full border border-white rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
         </div>
 
         <!-- Second column -->
         <div>
-          <label for="password" class="block text-sm">Password</label>
+          <label for="password" class="block text-[500] text-white">Password</label>
           <input id="password" type="password"
-            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+            class="w-full border border-white rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
 
-          <label for="confirm_password" class="block mt-3 text-sm">Confirm Password</label>
+          <label for="confirm_password" class="block mt-3 text-[500] text-white">Confirm Password</label>
           <input id="confirm_password" type="password"
-            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+            class="w-full border border-white rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
 
-          <label for="phone_number" class="block mt-3 text-sm">Phone Number</label>
+          <label for="phone_number" class="block mt-3 text-[500] text-white">Phone Number</label>
           <input id="phone_number" type="tel"
-            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+            class="w-full border border-white rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
 
-          <label for="mat_number" class="block mt-3 text-sm">Mat Number</label>
+          <label for="mat_number" class="block mt-3 text-[500] text-white">Mat Number</label>
           <input id="mat_number" type="text"
-            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+            class="w-full border border-white rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
         </div>
 
         <!-- Full width Email -->
         <div class="md:col-span-2">
-          <label for="email" class="block text-sm">Email</label>
+          <label for="email" class="block text-[500] text-white">Email</label>
           <input id="email" type="email"
-            class="w-full border border-gray-500 rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
+            class="w-full border border-white rounded p-2 bg-transparent focus:ring-2 focus:ring-indigo-500" />
         </div>
 
         <!-- Level -->
-        <div class="md:col-span-2">
-          <h3 class="text-center text-xl mb-2">Level</h3>
+        <div class="md:col-span-2 text-white">
+          <h3 class="text-center text-xl mb-">Level</h3>
           <div class="flex flex-wrap justify-center gap-6">
             <label class="flex items-center space-x-2">
               <input type="radio" name="level" value="100" />
@@ -128,7 +97,7 @@
 
         <!-- Status -->
         <div class="md:col-span-2">
-          <h3 class="text-center text-xl mb-2">Register as a</h3>
+          <h3 class="text-center text-xl mb-2 text-white">Register as a</h3>
           <div class="flex justify-center">
             <select id="status" class="w-1/2 p-2 border border-gray-500 rounded-lg bg-transparent">
               <option value="">-- Select --</option>
@@ -140,23 +109,23 @@
 
         <div class="md:col-span-2 flex flex-col items-center mt-3 space-y-4 lg:space-y-6">
           <!-- Terms -->
-          <div class="flex items-center space-x-2 text-sm lg:text-base">
+          <div class="flex items-center space-x-2 text-[500] lg:text-base text-white">
             <input id="terms" type="checkbox" class="w-4 h-4" />
             <label for="terms">I agree to terms and condition</label>
           </div>
 
           <!-- Submit -->
           <button type="submit"
-            class="border-2 border-[#415E72] bg-[#415E72] text-white py-2 px-6 lg:py-3 lg:px-8 rounded-md hover:bg-transparent hover:text-[#415E72]">
-            Submit
+            class="border-2 border-white bg-white text-[#81A7D6] font-[700] py-2 px-6 lg:py-3 lg:px-8 rounded-md hover:bg-transparent hover:text-[#415E72]">
+            Register
           </button>
         </div>
 
 
 
-        <div class="">
-          <p class="text-center mt-3">Already have an account? 
-            <a href="login.html" class="text-indigo-700 font-semibold hover:underline">Login</a>
+        <div>
+          <p class="text-center mt-3 text-white mr-50">Already have an account? 
+            <a href="login.html" class="text-black font-semibold hover:underline">Login</a>
           </p>
         </div>
       </form>
