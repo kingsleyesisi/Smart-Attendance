@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body class="bg-[#81A7D6] min-h-screen flex justify-center items-center">
+  <!-- Login Card -->
+  <div class="w-96 p-6 rounded-lg shadow-lg max-sm:leading-[3.0] bg-[#81A7D6] max-sm:shadow-none relative">
+    <button class="absolute top-4 left-4 text-gray-700 hover:bg-gray-200 p-2 rounded-full">
+      <a href="index.html"><i class="fa-solid fa-arrow-left text-white"></i></a>
+    </button> <br>
+    <h2 class="text-3xl text-white mb-2 font-bold"> Sign in to your account</h2>
+    <p class="text-white mb-6">sign in to access mark your atendance</p>
+    
+    <form id="loginForm">
+      <label for="mat-no" class="block font-medium text-white">Mat No</label>
+      <input type="text" id="email" class="w-full border rounded p-2 mb-4 border-white text-white" placeholder="Enter your mat no" required>
+      
+      <label for="password" class="block font-medium text-white">Password</label>
+      <input type="password" id="password" class="w-full border rounded p-2 mb-2 border-white text-white" required>
+      
+      <div class="flex justify-between items-center mb-4 ml-52">
+        <a href="forgetpassword.html" class="text-white font-semibold hover:underline">Forgot Password?</a>
+      </div>
+      
+      <button type="submit" class="w-full border-2 font-[800] border-white bg-white text-[#81A7D6] py-2 rounded-md  hover:text-white hover:bg-[#81A7D6]  transition cursor-pointer">
+        Login
+      </button>
+    </form>
+    
+    <p class="text-center mt-6 text-white">Don't have an account? 
+      <a href="register.html" class="text-black font-semibold hover:underline">Create account</a>
+    </p>
+  </div>
+
+  <!-- Popup (Hidden by default) -->
+  <div id="popup" class="hidden fixed bottom-6 right-6 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-bounce">
+    ✅ You have successfully logged in!
+  </div>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const popup = document.getElementById("popup");
+
+    loginForm.addEventListener("submit", function(e) {
+      e.preventDefault(); // stop form from refreshing page
+      
+      // Show popup
+      popup.classList.remove("hidden");
+      
+      // After 2 seconds → redirect to dashboard
+      setTimeout(() => {
+        popup.classList.add("hidden");
+        window.location.href = "studentsdashboard.html"; // change this to your dashboard page
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
